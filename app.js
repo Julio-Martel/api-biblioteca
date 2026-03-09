@@ -25,6 +25,32 @@ app.get("/libros/:codigo",(req,res) => {
     }
 })
 
+const verificarCodigoDeLibro = (req,res,next) => {
+    const codigo = parseInt(req.params.codigo);
+    const filtrarLibro = baseDeDatosLibros.findIndex(l => l.codigo === codigo);
+
+    if(filtrarLibro === -1) {
+        return res.status(409).json({
+            mensaje: "No existe libro con ese codigo"
+        })
+    }
+
+    next();
+}
+
+app.get("/libros/:codigo", verificarCodigoDeLibro, (req,res) => {
+    const codigo = parseInt(req.params.codigo);
+    const filtrarLibro = baseDeDatosLibros.findIndex(l => l.codigo === codigo);
+    const libroFiltrado =  baseDeDatosLibros[filtrarLibro];
+
+    res.status(200).json({
+        mensaje: "Libro Encontrado",
+        libroFiltrado : libroFiltrado
+    })
+
+})
+
+
 app.listen(3000,() => {
     console.log("Servidor activo");
 })
