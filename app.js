@@ -19,7 +19,7 @@ app.get("/libros/:codigo",(req,res) => {
             libro: libroEncontrado
         })
     } else {
-        res.status(409).json(
+        res.status(404).json(
            { mensaje: "No existe libro con ese codigo"}
         )
     }
