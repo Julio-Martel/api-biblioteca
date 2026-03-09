@@ -50,6 +50,23 @@ app.get("/libros/:codigo", verificarCodigoDeLibro, (req,res) => {
 
 })
 
+app.put("/libros/:codigo", verificarCodigoDeLibro, (req,res) => {
+    const codigo = parseInt(req.params.codigo);
+    const filtrarLibro = baseDeDatosLibros.findIndex(l => l.codigo === codigo);
+    
+    baseDeDatosLibros[filtrarLibro] = {
+        codigo: codigo,
+        ...req.body
+    }
+
+    res.status(202).json({
+        mensaje: "Libro reemplazado",
+        libroFiltrado: baseDeDatosLibros[filtrarLibro]
+    })
+
+})
+
+
 
 app.listen(3000,() => {
     console.log("Servidor activo");
