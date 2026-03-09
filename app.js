@@ -66,6 +66,19 @@ app.put("/libros/:codigo", verificarCodigoDeLibro, (req,res) => {
 
 })
 
+app.patch("/libros/:codigo", verificarCodigoDeLibro, (req,res) => {
+    const codigo = parseInt(req.params.codigo);
+    const filtrarLibro = baseDeDatosLibros.findIndex(l => l.codigo === codigo);
+
+    baseDeDatosLibros[filtrarLibro].disponible = req.body.disponible
+
+    res.status(202).json({
+        mensaje: "Disponibilidad actualizada",
+        libroActualizado: baseDeDatosLibros[filtrarLibro]
+    })
+
+})
+
 
 
 app.listen(3000,() => {
