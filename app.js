@@ -79,6 +79,16 @@ app.patch("/libros/:codigo", verificarCodigoDeLibro, (req,res) => {
 
 })
 
+app.delete("/libros/:codigo", verificarCodigoDeLibro, (req,res) => {
+    const codigo = parseInt(req.params.codigo);
+    const filtrarLibro = baseDeDatosLibros.findIndex(l => l.codigo === codigo);
+
+    baseDeDatosLibros.splice(filtrarLibro,1);
+
+    res.status(204).json({
+        mensaje: "Libro borrado"
+    })
+})
 
 
 app.listen(3000,() => {
